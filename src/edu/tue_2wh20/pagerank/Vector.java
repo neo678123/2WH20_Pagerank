@@ -48,4 +48,16 @@ public class Vector {
 		}
 		return w;
 	}
+	
+	public double sum() {
+		return Methods.sum(0, dim-1, v);
+	}
+	
+	public void divideBy(double n) {
+		for(int i = 0; i < dim-1; i++) v[i] /= n;
+	}
+	
+	public void add(Vector v) {
+		for(int i = 0; i < dim-1; i++) this.v[i] += v.v[i];
+	}
 }

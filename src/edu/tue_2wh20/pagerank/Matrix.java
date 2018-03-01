@@ -33,7 +33,7 @@ public class Matrix {
 	/* Getters/setters */
 	
 	// Assign matrix to another one without memory glitches
-	private void set(Matrix m) {
+	protected void set(Matrix m) {
 		M = Methods.clone2dArray(m.M);
 		sizeX = M[0].length;
 		sizeY = M.length;
