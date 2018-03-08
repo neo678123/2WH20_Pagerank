@@ -63,16 +63,11 @@ public class Internet {
 		// probability 1-p to choose a random site
 		else {
 			int i = rand.nextInt(dim);
-			while(i == curSite) i = rand.nextInt(dim);
-			
-			System.out.println(i + "ayy");
+			//while(i == curSite) i = rand.nextInt(dim);
 			
 			x.v[i] += 1;
 			curSite = i;
 		}
-		
-		// normalise the vector such that $ \sum_i x_i = 1 $
-		this.x.divideBy(x.sum());
 	}
 	
 	public void iterateMatrixMult() {
@@ -85,6 +80,9 @@ public class Internet {
 		for(int i = 0; i < dim; i++) {
 			if(G.M[curSite][i] == 1) indexList.add(i);
 		}
+		
+		if(indexList.size() == 0)
+			return rand.nextInt(dim);
 		
 		/* debugging purposes */
 		int i = rand.nextInt(indexList.size());

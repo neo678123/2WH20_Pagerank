@@ -16,13 +16,16 @@ public class Main {
 	public static void main(String args[]) {
 		Main m = new Main();
 		m.G = new Matrix(readFile("test_matrix"));
-		m.p = 0.5;
+		m.p = 1.0;
 	
 		m.initialize();
 		
-		for(int i = 0; i < 10000; i++) {
+		int n = 10000000;
+		
+		for(int i = 0; i < n; i++) {
 			m.I.iterateRandomWalk();
 		}
+		m.I.x.divideBy((double)n);
 		m.I.x.print();
 		
 	}
