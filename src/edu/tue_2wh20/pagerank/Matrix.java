@@ -18,7 +18,7 @@ public class Matrix {
 	public Matrix(int sizeX, int sizeY) {
 		// Java initializes doubles as 0.0d by default
 		// (no need to manually set everything to 0)
-		M = new double[sizeX][sizeX];
+		M = new double[sizeY][sizeX];
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
 	}
@@ -49,10 +49,10 @@ public class Matrix {
 		
 		// Calculate M1 * M2 using standard sum(row * collumn)
 		Matrix out = new Matrix(M1.sizeX, M2.sizeY);
-		for(int x = 0; x < out.sizeX; x++) {
-			for(int y = 0; y < out.sizeY; y++) {
+		for(int y = 0; y < out.sizeY; y++) {
+			for(int x = 0; x < out.sizeX; x++) {
 				for(int k = 0; k < M1.sizeY; k++) {
-					out.M[y][x] += M1.M[x][k] * M2.M[k][y];
+					out.M[x][y] += M1.M[y][k] * M2.M[k][x];
 				}
 			}
 		}
@@ -64,4 +64,15 @@ public class Matrix {
 	public void multiplyBy(Matrix m) {
 		this.set(Matrix.multiply(this, m));
 	}	
+	
+	public void print() {
+		System.out.println(sizeX + " " + sizeY);
+		
+		for(int y = 0; y < sizeY; y++) {
+			for(int x = 0; x < sizeX; x++)
+				System.out.print(Methods.rnd(M[y][x]) + " ");
+			
+			System.out.print("\n");
+		}
+	}
 }

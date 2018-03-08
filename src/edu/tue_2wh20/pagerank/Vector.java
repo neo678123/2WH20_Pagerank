@@ -49,15 +49,19 @@ public class Vector {
 		return w;
 	}
 	
+	public void print() {
+		for(int i = 0; i < dim; i++) System.out.println(v[i]);
+	}
+	
 	public double sum() {
 		return Methods.sum(0, dim-1, v);
 	}
 	
 	public void divideBy(double n) {
-		for(int i = 0; i < dim-1; i++) v[i] /= n;
+		for(int i = 0; i < dim; i++) v[i] /= n;
 	}
 	
 	public void add(Vector v) {
-		for(int i = 0; i < dim-1; i++) this.v[i] += v.v[i];
+		for(int i = 0; i < dim; i++) this.v[i] += v.v[i];
 	}
 }

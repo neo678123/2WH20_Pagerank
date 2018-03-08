@@ -23,6 +23,21 @@ public class Methods {
 		}
 		return S;
 	}
+
+	
+	// gets the sum of the j-th column of a matrix
+	public static double sumColumn(int j, double[][] m) {
+		double out = 0;
+		for(int i = 0; i < m.length; i++) {
+			out += m[i][j];
+		}
+		
+		return out;
+	}
+
+	public static float rnd(double d) {
+		return Math.round(10000*d)/10000f;
+	}
 	
 	
 }
