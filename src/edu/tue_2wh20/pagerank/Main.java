@@ -16,18 +16,34 @@ public class Main {
 	public static void main(String args[]) {
 		Main m = new Main();
 		m.G = new Matrix(readFile("test_matrix"));
-		m.p = 1.0;
+		m.p = 0.85;
 	
 		m.initialize();
 		
-		int n = 10000000;
+		Long T1 = System.nanoTime();
+		
+		final int n = 1000000;
+		
+//		Vector v = new Vector();
+//		v.set(m.I.x);
 		
 		for(int i = 0; i < n; i++) {
+			m.I.iterateMatrixMult();
 			m.I.iterateRandomWalk();
 		}
-		m.I.x.divideBy((double)n);
-		m.I.x.print();
 		
+//		v.print();
+//		m.I.x.print();
+		
+		m.I.x.divideBy((double)n);
+		
+		Long T2 = System.nanoTime();
+		
+//		v.divideBy((double)-n);
+//		m.I.x.add(v);
+		Vector.printCompare(m.I.x, m.I.v);
+		
+		System.out.println((T2-T1)/1000000.0d + "ms");
 	}
 	
 	
@@ -36,7 +52,7 @@ public class Main {
 	public static double[][] readFile(String fileName) {
 		try {
 			BufferedReader r = new BufferedReader(new FileReader(new File(fileName)));
-			double[][] array = new double[4][4];
+			double[][] array = new double[20][20];
 			String line = r.readLine();
 			
 			int i = 0, j = 0;

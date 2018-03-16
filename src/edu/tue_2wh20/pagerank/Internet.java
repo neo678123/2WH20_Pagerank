@@ -11,7 +11,7 @@ public class Internet {
 	
 	// Variables for exercise 4
 	public Matrix A;
-	public Vector x;
+	public Vector x, v;
 	
 	// Variables for both exercises
 	public Matrix G;
@@ -30,6 +30,7 @@ public class Internet {
 		this.G = new Matrix(G.M);
 		this.p = p;
 		this.x = new Vector(G.sizeY);
+		this.v = new Vector(G.sizeY);
 		this.dim = G.sizeY;
 		
 		int n = G.sizeY;
@@ -45,9 +46,8 @@ public class Internet {
 				else
 					this.A.M[i][j] = p*G.M[i][j]/c_j + (1-p)/(double)n;
 			}
-		}
-	}
-	
+		}	
+	}	
 	
 	/* Methods */
 	
@@ -71,18 +71,20 @@ public class Internet {
 	}
 	
 	public void iterateMatrixMult() {
-		x = Vector.multiply(A, x);
+		v.multBy(A);
+		v.divideBy(v.sum());
 	}
 	
 	public int nextSite() {
 		//indexList will contain the sites which are outlinks of curSite		
 		ArrayList<Integer> indexList = new ArrayList<Integer>();
 		for(int i = 0; i < dim; i++) {
-			if(G.M[curSite][i] == 1) indexList.add(i);
+			if(G.M[i][curSite] == 1) indexList.add(i);
 		}
 		
-		if(indexList.size() == 0)
+		if(indexList.size() == 0) {
 			return rand.nextInt(dim);
+		}
 		
 		/* debugging purposes */
 		int i = rand.nextInt(indexList.size());

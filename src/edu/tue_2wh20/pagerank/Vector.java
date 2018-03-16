@@ -39,18 +39,24 @@ public class Vector {
 	
 	public static Vector multiply(Matrix M, Vector v) {
 		Vector w = new Vector(v.dim);
-		for(int x = 0; x < M.sizeX; x++) {
-			double sum = 0;
-			for(int y = 0; y < M.sizeY; y++) {
-				sum += M.M[y][x] * v.v[y];
+		
+		for(int row = 0; row < v.dim; row++) {
+			double s = 0;
+			for(int col = 0; col < v.dim; col++) {
+				s += M.M[row][col] * v.v[col];
 			}
-			w.v[x] = sum;
+			w.v[row] = s;
 		}
+		
 		return w;
 	}
 	
 	public void print() {
 		for(int i = 0; i < dim; i++) System.out.println(v[i]);
+	}
+	
+	public static void printCompare(Vector v, Vector w) {
+		for(int i = 0; i < v.dim; i++) System.out.println(Methods.rnd(v.v[i]) + "  |  " + Methods.rnd(w.v[i]));
 	}
 	
 	public double sum() {
@@ -59,6 +65,10 @@ public class Vector {
 	
 	public void divideBy(double n) {
 		for(int i = 0; i < dim; i++) v[i] /= n;
+	}
+	
+	public void multBy(Matrix M) {
+		this.set(multiply(M,this));
 	}
 	
 	public void add(Vector v) {
