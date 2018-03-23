@@ -4,14 +4,15 @@ import java.util.Scanner;
 
 public class Main {
 	/* Using enum to know what exercise should be done */
-//	final State s = State.RANDOMWALK;
-	final State STATE = State.EIGENVECTOR;
+//	final State STATE = State.RANDOMWALK;
+//	final State STATE = State.EIGENVECTOR;
+	final State STATE = State.COMPARE;
 	final double P = 0.85;
 	
 	public static void main(String[] args) {
 		Main m = new Main();
 		
-		final int MAX_ITERATIONS = 1000000;
+		final int MAX_ITERATIONS = 400000;
 		
 		// 1E-15 is the smallest order of magnitude where 
 		// ||pageRank - prevPagrank||_1 < epsilon in less
@@ -27,28 +28,18 @@ public class Main {
 				I.iterate();
 			}
 			
-			
 			I.normalizePageRank();
 			I.getPagerank().print();	
 		}
-		else {
+		else if(m.STATE == State.EIGENVECTOR){	
 			Internet I = new InternetEigenValues(readFile("test_matrix"), m.P);
 			prevPageRank = new Vector(I.getPagerank().dim);
-			
-			// Checking how many nanoseconds it took to find the pagerank
-			Long T1 = System.nanoTime();
-			Long T2 = 0l;
 			
 			for(int i = 0; i < MAX_ITERATIONS; i++) {
 				I.iterate();
 				
-				if(Vector.sumAbsDiff(I.getPagerank(), prevPageRank) < epsilon) {
-					// T2 is set here as a call to println probably takes more time
-					// than finding the pagerank
-					T2 = System.nanoTime();
-					
+				if(Vector.sumAbsDiff(I.getPagerank(), prevPageRank) < epsilon) {					
 					System.out.println("Amount of iterations: " + i);
-					System.out.println("Time taken: " + (T2-T1)/1E6d + "ms \n"); // ms are more understandable than ns
 					break;
 				}
 				
@@ -57,6 +48,21 @@ public class Main {
 			
 			I.normalizePageRank();
 			I.getPagerank().print();	
+		}
+		else {
+			String[] matrix = readFile("test_matrix");
+			Internet Ir = new InternetRandomWalk(matrix, m.P);
+			Internet Iv = new InternetEigenValues(matrix, m.P);
+			
+			for(int i = 0; i < MAX_ITERATIONS; i++) {
+				Ir.iterate();
+				Iv.iterate();
+			}
+			
+			Ir.normalizePageRank();
+			Iv.normalizePageRank();
+			
+			Vector.printCompare(Ir.getPagerank(), Iv.getPagerank());
 		}
 	}
 	

@@ -39,6 +39,17 @@ public class Vector {
 		for(int i = 0; i < dim; i++) System.out.println(v[i]);
 	}
 	
+	public static void printCompare(Vector v, Vector w) {
+		Vector u = new Vector(v.dim);
+		u.set(v);
+		u.sub(w);
+		
+		System.out.println("random walk  |  eigenvector  |  difference");
+		for(int i = 0; i < v.dim; i++) System.out.println(Math.round(1000*v.v[i])/1000d + "  |  " + 
+														  Math.round(1000*w.v[i])/1000d + "  |  " + 
+														  Math.round(1000*u.v[i])/1000d);
+	}
+	
 	// Returns the sum of the components of this
 	public double sum() {
 		double sum = 0;
