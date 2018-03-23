@@ -19,9 +19,12 @@ public class Main {
 		// than 1000000 iterations
 		double epsilon = 1E-15;
 		Vector prevPageRank;
+		Internet I;
 		
-		if(m.STATE == State.RANDOMWALK) {
-			Internet I = new InternetRandomWalk(readFile("test_matrix"), m.P);
+		// Switch because this makes adding states more easy
+		switch(m.STATE) {
+		case RANDOMWALK:
+			I = new InternetRandomWalk(readFile("test_matrix"), m.P);
 			prevPageRank = new Vector(I.getPagerank().dim);
 			
 			for(int i = 0; i < MAX_ITERATIONS; i++) {
@@ -30,9 +33,9 @@ public class Main {
 			
 			I.normalizePageRank();
 			I.getPagerank().print();	
-		}
-		else if(m.STATE == State.EIGENVECTOR){	
-			Internet I = new InternetEigenValues(readFile("test_matrix"), m.P);
+		break;
+		case EIGENVECTOR:
+			I = new InternetEigenValues(readFile("test_matrix"), m.P);
 			prevPageRank = new Vector(I.getPagerank().dim);
 			
 			for(int i = 0; i < MAX_ITERATIONS; i++) {
@@ -48,8 +51,8 @@ public class Main {
 			
 			I.normalizePageRank();
 			I.getPagerank().print();	
-		}
-		else {
+		break;
+		case COMPARE:
 			String[] matrix = readFile("test_matrix");
 			Internet Ir = new InternetRandomWalk(matrix, m.P);
 			Internet Iv = new InternetEigenValues(matrix, m.P);
@@ -63,6 +66,8 @@ public class Main {
 			Iv.normalizePageRank();
 			
 			Vector.printCompare(Ir.getPagerank(), Iv.getPagerank());
+		break;
+		default: break;
 		}
 	}
 	
